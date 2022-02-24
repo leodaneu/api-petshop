@@ -7,6 +7,16 @@ class Serializador {
     }
 
     xml(dados) {
+        let tag = this.tagSingular
+
+        if (Array.isArray(dados)) {
+            tag = this.tagPlural
+            dados = dados.map((item) => {
+                return {
+                    [this.tagSingular]: item
+                }
+            })
+        }
         return jsontoxml({ [this.tag]: dados})
     }
 
@@ -55,7 +65,8 @@ class SerializadorFornecedor extends Serializador {
             'empresa', 
             'categoria'
         ].concat(camposExtras || []),
-        this.tag = 'fornecedor'
+        this.tagSingular = 'fornecedor'
+        this.tagPlural = 'fornecedores'
     }
 }
 
@@ -67,7 +78,8 @@ class SerializadorErro extends Serializador {
             'id', 
             'mensagem'
         ].concat(camposExtras || []),
-        this.tag = 'erro'
+        this.tagSingular = 'erro'
+        this.tagPlural = 'erros'
     }
 }
 
