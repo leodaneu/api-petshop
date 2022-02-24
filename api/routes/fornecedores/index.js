@@ -7,7 +7,8 @@ roteador.get('/', async (requisicao, resposta) => {
     const resultados = await TabelaFornecedor.listar()
     resposta.status(200)
     const serializador = new SerializadorFornecedor(
-        resposta.getHeader('Content-Type')
+        resposta.getHeader('Content-Type'), 
+        ['email', 'dataCriacao', 'dataAtualizacao', 'versao']
     )
     resposta.send(
         serializador.serializar(resultados)
